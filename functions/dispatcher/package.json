@@ -1,0 +1,16 @@
+{
+  "name": "dispatcher",
+  "version": "1.0.0",
+  "description": "Dispatcher for functions",
+  "license": "ISC",
+  "author": "Kavishka Rambukwella",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@kubernetes/client-node": "^1.3.0",
+    "express": "^5.1.0"
+  }
+}
