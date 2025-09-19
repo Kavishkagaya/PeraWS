@@ -1,0 +1,47 @@
+{
+    "pods": {
+        "node": {
+            "replicas": 3,
+            "manifest": {
+                "apiVersion": "v1",
+                "kind": "Pod",
+                "metadata": {
+                    "generateName": "node-pod-",
+                    "labels": {
+                        "app": "node-function"
+                    }
+                },
+                "spec": {
+                    "containers": [
+                        {
+                            "name": "node-container",
+                            "image": "node:14",
+                            "ports": [
+                                {
+                                    "containerPort": 3000
+                                }
+                            ],
+                            "volumeMounts": [
+                                {
+                                    "name": "function-code",
+                                    "mountPath": "/usr/src/app"
+                                }
+                            ],
+                            "workingDir": "/usr/src/app"
+                        }
+                    ],
+                    "volumes": [
+                        {
+                            "name": "function-code",
+                            "hostPath": {
+                                "path": "/home/function/node/",
+                                "type": "Directory"
+                            }
+                        }
+                    ],
+                    "restartPolicy": "Never"
+                }
+            }
+        }
+    }
+}
