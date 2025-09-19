@@ -34,14 +34,16 @@
                         {
                             "name": "function-code",
                             "hostPath": {
-                                "path": "/home/function/node/",
+                                "path": "/functions/node/",
                                 "type": "Directory"
                             }
                         }
                     ],
+                    "command": ["tail", "-f", "/dev/null"],
                     "restartPolicy": "Never"
                 }
             }
         }
     }
 }
+
