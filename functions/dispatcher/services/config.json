@@ -27,6 +27,7 @@
                                     "mountPath": "/usr/src/app"
                                 }
                             ],
+                            "command": ["tail", "-f", "/dev/null"],
                             "workingDir": "/usr/src/app"
                         }
                     ],
@@ -39,7 +40,6 @@
                             }
                         }
                     ],
-                    "command": ["tail", "-f", "/dev/null"],
                     "restartPolicy": "Never"
                 }
             }
