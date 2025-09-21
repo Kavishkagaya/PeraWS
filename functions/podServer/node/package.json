@@ -1,0 +1,15 @@
+{
+  "name": "node-pod",
+  "version": "1.0.0",
+  "description": "nodejs pod for function instance",
+  "license": "ISC",
+  "author": "Kavishka Rambukwella",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
