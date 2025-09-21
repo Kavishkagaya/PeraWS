@@ -67,19 +67,42 @@ const listPods = async (namespace) => {
 
 const execInPod = async (podName, namespace, command) => {
     return new Promise((resolve, reject) => {
-        const stdout = []
-        const stderr = []
+        let stdout = '';
+        let stderr = '';
 
-        excec.exec(namespace, podName, 'container-name', command,
-            process.stdout, process.stderr, null, false /* tty */, (status) => {
-                if (status.status === 'Success') {
-                    resolve(stdout.join(''))
+        const outStream = {
+            write: (chunk) => { stdout += chunk.toString(); }
+        };
+        const errStream = {
+            write: (chunk) => { stderr += chunk.toString(); }
+        };
+
+        exec.exec(
+            namespace,
+            podName,
+            'node-container', // replace with your container name
+            command,
+            outStream,
+            errStream,
+            null,
+            false, // tty
+            (status) => {
+                if (status?.status === 'Success') {
+                    resolve({
+                        statusCode: 200,
+                        body: stdout.trim(),
+                    });
                 } else {
-                    reject(new Error(stderr.join('')))
+                    resolve({
+                        statusCode: 500,
+                        error: stderr.trim() || 'Command failed',
+                    });
                 }
-            })
-    })
-}
+            }
+        ).catch(reject);
+    });
+};
+
 
 module.exports = {
     createNamespace,

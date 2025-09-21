@@ -1,7 +1,7 @@
 {
     "pods": {
         "node": {
-            "replicas": 3,
+            "minPods": 3,
             "manifest": {
                 "apiVersion": "v1",
                 "kind": "Pod",
