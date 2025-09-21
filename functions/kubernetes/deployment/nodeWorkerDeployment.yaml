@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-worker
+  labels:
+    app: node-worker
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: node-worker
+  template:
+    metadata:
+      labels:
+        app: node-worker
+    spec:
+      containers:
+        - name: node-worker
+          image: nodefuncpod:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: worker-storage
+              mountPath: /usr/src/app/functions/node
+      volumes:
+        - name: worker-storage
+          hostPath:
+            path: /home/kavishka/functions/node
+            type: DirectoryOrCreate
