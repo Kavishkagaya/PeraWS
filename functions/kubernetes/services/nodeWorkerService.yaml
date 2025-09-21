@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-worker-service
+  labels:
+    app: node-worker
+spec:
+  selector:
+    app: node-worker
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer
