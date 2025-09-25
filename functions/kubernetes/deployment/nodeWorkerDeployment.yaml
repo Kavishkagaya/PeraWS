@@ -22,9 +22,9 @@ spec:
             - containerPort: 3000
           volumeMounts:
             - name: worker-storage
-              mountPath: /usr/src/app/functions/node
+              mountPath: /usr/src/app/function/node
       volumes:
         - name: worker-storage
           hostPath:
-            path: /home/kavishka/functions/node
+            path: /functions/node
             type: DirectoryOrCreate
