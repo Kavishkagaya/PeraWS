@@ -1,36 +1,29 @@
-const express = require('express');
-const { existsSync } = require('fs');
+const path = require('path');
 
-const app = express();
-const port = process.env.PORT || 3000;
+const args = process.argv
+const basePath = process.env.BASE_PATH || "/home/kavishka/function"
 
-app.use(express.json());
+if (args.length < 4)
+    return "not enough args"
 
-app.post('/invoke', async (req, res) => {
-    const { path, event, context } = req.body;
+const event = JSON.parse(args[2])
+const context = JSON.parse(args[3])
 
-    // Handle the event based on the path
-    if (!existsSync(path)) {
-        return res.status(404).send({ error: 'Function not found' });
-    }
+const { runtime, func } = context
 
+const funcPath = path.join(basePath, runtime, func, "handler.js")
+
+const { handler } = require(funcPath);
+
+// Execute handler
+(async () => {
     try {
-        const module = await import(path);
-        if (!module.handler) {
-            return res.status(400).send({ error: 'Handler function not found' });
-        }
+        const result = await handler(event, context);
+        console.log(JSON.stringify(result)); 
     } catch (err) {
-        return res.status(500).send({ error: 'Error loading module' });
+        console.error(JSON.stringify({
+            error: err
+        }));
+        process.exit(1);
     }
-
-    try {
-        const result = await module.handler(event, context);
-        return res.send({ result });
-    } catch (error) {
-        return res.status(500).send({ error: error.message });
-    }
-});
-
-app.listen(port, () => {
-    console.log(`Pod server running at http://localhost:${port}`);
-});
+})();
