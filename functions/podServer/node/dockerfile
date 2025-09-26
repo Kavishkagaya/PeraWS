@@ -2,6 +2,8 @@ FROM alpine
 
 RUN apk add --update nodejs npm
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 COPY . .
+
+CMD ["tail", "-f", "/dev/null"]

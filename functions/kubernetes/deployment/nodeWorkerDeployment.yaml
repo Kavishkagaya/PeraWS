@@ -18,6 +18,9 @@ spec:
         - name: node-worker
           image: nodefuncpod:latest
           imagePullPolicy: IfNotPresent
+          env:
+            - name: BASE_PATH
+              value: /usr/src/app/function
           ports:
             - containerPort: 3000
           volumeMounts:
@@ -26,5 +29,5 @@ spec:
       volumes:
         - name: worker-storage
           hostPath:
-            path: /functions/node
+            path: /function/node
             type: DirectoryOrCreate
